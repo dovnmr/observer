@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['print',['print',['../class_subject.html#aa0d234896f8f50dc04b8e79d16a42f2b',1,'Subject']]]
+  ['read',['read',['../class_subject.html#a7ec22c9f37594664ea939caf7fb018f3',1,'Subject']]]
 ];

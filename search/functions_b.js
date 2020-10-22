@@ -1,5 +1,7 @@
 var searchData=
 [
-  ['set',['set',['../_c_make_lists_8txt.html#abed8177b0359bb37e78aebe0412cc156',1,'CMakeLists.txt']]],
-  ['subject',['Subject',['../class_subject.html#a979516c711730befde6cae1ef83527fc',1,'Subject']]]
+  ['_7eiobserver',['~IObserver',['../class_i_observer.html#a1306da2dbaf55620130af5586e3a0373',1,'IObserver']]],
+  ['_7eisubject',['~ISubject',['../class_i_subject.html#a6c5b23ca0dc6b162f13b565319f78bd8',1,'ISubject']]],
+  ['_7eobserver',['~Observer',['../class_observer.html#afcc6b67be6c386f2f3d2c363aa59cb47',1,'Observer']]],
+  ['_7esubject',['~Subject',['../class_subject.html#abbb821d35a5986ad4a2a0d7ab060c37e',1,'Subject']]]
 ];
