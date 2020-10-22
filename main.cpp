@@ -174,8 +174,8 @@ int main() {
 //cmd5\n\
 //cmd6\n\
 //cmd7");
-    std::streambuf * buf = std::cin.rdbuf(iss.rdbuf());
-    std::cin.rdbuf(iss.rdbuf());
+//    std::streambuf * buf = std::cin.rdbuf(iss.rdbuf());
+//    std::cin.rdbuf(iss.rdbuf());
     Subject *subject = new Subject(3);
     delete subject;
   return 0;
