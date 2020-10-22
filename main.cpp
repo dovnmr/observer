@@ -24,7 +24,7 @@ class IObserver {
     IObserver(std::string s):str_(s){};
     std::string get(){return str_;}
     virtual ~IObserver() = default;
-    virtual void Execute(){};
+    virtual void Execute(std::ofstream& ){};
 };
 
 class Observer : public IObserver {
@@ -32,8 +32,9 @@ class Observer : public IObserver {
     Observer(std::string s):IObserver(s){};
     virtual ~Observer() {
     }
-    void Execute() override {
+    void Execute(std::ofstream& File) override {
       std::cout<<get()<<" ";
+        File<<get()<<" ";
     }
 };
 class ISubject {
@@ -41,7 +42,7 @@ class ISubject {
   virtual ~ISubject(){};
   virtual void Attach(IObserver *observer) = 0;
   virtual void Detach(IObserver *observer) = 0;
-  virtual void Notify(std::string) = 0;
+  virtual void Notify(std::ofstream&) = 0;
 };
 
 /**
@@ -52,7 +53,7 @@ class ISubject {
 class Subject : public ISubject {
     unsigned _size;
     public:
-    virtual ~Subject() {
+    virtual ~Subject() override{
         std::cout << "Goodbye, I was the Subject.\n";
     }
     Subject(unsigned size):_size(size){
@@ -67,14 +68,16 @@ class Subject : public ISubject {
     void Detach(IObserver *observer) override {
         list_observer_.remove(observer);
     }
-    void Notify(std::string s) override {
+    void Notify(std::ofstream& f) override {
         std::list<IObserver *>::iterator iterator = list_observer_.begin();
-        print("   bulk: ");
+        std::cout<<"bulk: ";
+        f<<"bulk: ";
         while (iterator != list_observer_.end()) {
-            (*iterator)->Execute();
+            (*iterator)->Execute(f);
             ++iterator;
         }
-//        std::cout<<std::endl;
+        std::cout<<std::endl;
+        f<<std::endl;
         list_observer_.clear();
     }
 //
@@ -95,15 +98,15 @@ class Subject : public ISubject {
 ////        File<<str;
 //        return os;
 //    }
-    void print(std::string str){
-        static bool startFlag = true;
-        std::string end = "\n";
-        if(startFlag)
-            startFlag = false;
-        else if(str.compare(0, 4, "   b")){
-            std::cout<<end; File<<end;}
-        std::cout<<str; File<<str;
-    }
+//    void print(std::string str){
+//        static bool startFlag = true;
+//        std::string end = "\n";
+//        if(startFlag)
+//            startFlag = false;
+//        else if(str.compare(0, 4, "   b")){
+//            std::cout<<end; File<<end;}
+//        std::cout<<str; File<<str;
+//    }
   void read() {
       std::string line;
       unsigned flag = 0;
@@ -111,27 +114,25 @@ class Subject : public ISubject {
       File.open(fileName);
       while(!std::cin.eof()){
           std::getline(std::cin, line);
-          print(line);
           if (!line.compare("{")) {
               if(list_observer_.size() && !flag){
-                  Notify("{");
+                  Notify(File);
               }
               ++flag;
               continue;
           }
           else if(!line.compare("}")){
               if(flag) --flag;
-              if(!flag) Notify("}");
+              if(!flag) Notify(File);
               continue;
           }
           
           Attach(new Observer(line));
           if(list_observer_.size() >= _size && !flag)
-            Notify(line);
-          else print(line);
+            Notify(File);
       }
       if(!flag &&list_observer_.size())
-          Notify(line);
+          Notify(File);
       list_observer_.clear();
       File.close();
   }
@@ -173,8 +174,8 @@ int main() {
 //cmd5\n\
 //cmd6\n\
 //cmd7");
-//    std::streambuf * buf = std::cin.rdbuf(iss.rdbuf());
-//    std::cin.rdbuf(iss.rdbuf());
+    std::streambuf * buf = std::cin.rdbuf(iss.rdbuf());
+    std::cin.rdbuf(iss.rdbuf());
     Subject *subject = new Subject(3);
     delete subject;
   return 0;
